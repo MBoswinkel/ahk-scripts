@@ -77,6 +77,12 @@ BookmarkNavigator(Num) {
 ^7:: {
 	FolderNavigator(7)
 }
+^8:: {
+	FolderNavigator(8)
+}
+^9:: {
+	FolderNavigator(9)
+}
 
 ; Google Chrome custom hotkeys
 #HotIf WinActive('ahk_exe chrome.exe')
@@ -91,4 +97,19 @@ BookmarkNavigator(Num) {
 }
 ^4:: {
 	BookmarkNavigator(4)
+}
+^5:: {
+	BookmarkNavigator(5)
+}
+^6:: {
+	BookmarkNavigator(6)
+}
+^7:: {
+	BookmarkNavigator(7)
+}
+^8:: {
+	BookmarkNavigator(8)
+}
+^9:: {
+	BookmarkNavigator(9)
 }
