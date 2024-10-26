@@ -1,6 +1,4 @@
-﻿; This script contains all custom hotkeys that are in use on this PC
-
-; Forces only one instance of this script to run
+﻿; Forces only one instance of this script to run
 #SingleInstance Force
 
 ; Duration of standard pause between keypresses
@@ -8,7 +6,7 @@ StandardPauseDuration := 50
 
 ; Function for navigating to quick access folders in Windows File Explorer
 FolderNavigator(Num) {
-	Sleep(15*StandardPauseDuration)
+	Sleep(10*StandardPauseDuration)
 	Send('+{Tab}')
 	Sleep(StandardPauseDuration)
 	Send('{Home}')
@@ -18,13 +16,13 @@ FolderNavigator(Num) {
 		Sleep(StandardPauseDuration)
 	}
 	Send('{Enter}')
-	Sleep(25*StandardPauseDuration)
+	Sleep(20*StandardPauseDuration)
 	Send('{Tab}')
 }
 
 ; Function for navigating to bookmarks on the Google Chrome bookmark bar
 BookmarkNavigator(Num) {
-	Sleep(15*StandardPauseDuration)
+	Sleep(10*StandardPauseDuration)
 	Send('!B')
 	Sleep(StandardPauseDuration)
 	Loop (Num-1) {
@@ -34,7 +32,7 @@ BookmarkNavigator(Num) {
 	Send('{Enter}')
 }
 
-; System-wide custom hotkeys
+; System-wide music hotkeys
 ^Numpad0:: {
 	Send('{Volume_Mute}')
 }
@@ -54,7 +52,7 @@ BookmarkNavigator(Num) {
 	Send('{Media_Prev}')
 }
 
-; Windows File Explorer custom hotkeys
+; Windows File Explorer quick access hotkeys
 #HotIf WinActive('ahk_class CabinetWClass')
 ^1:: {
 	FolderNavigator(1)
@@ -84,7 +82,7 @@ BookmarkNavigator(Num) {
 	FolderNavigator(9)
 }
 
-; Google Chrome custom hotkeys
+; Google Chrome bookmark hotkeys
 #HotIf WinActive('ahk_exe chrome.exe')
 ^1:: {
 	BookmarkNavigator(1)
