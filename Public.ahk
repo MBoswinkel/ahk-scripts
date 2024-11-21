@@ -1,12 +1,14 @@
 ﻿; Forces only one instance of this script to run
 #SingleInstance Force
 
-; Duration of standard pause between keypresses
+; Duration of standard pause between actions
 StandardPauseDuration := 50
+
+; Number of bookmarks on the Google Chrome bookmark bar
+NumberOfBookmarks := 3
 
 ; Function for navigating to quick access folders in Windows File Explorer
 FolderNavigator(Num) {
-	Sleep(10*StandardPauseDuration)
 	Send('+{Tab}')
 	Sleep(StandardPauseDuration)
 	Send('{Home}')
@@ -16,13 +18,12 @@ FolderNavigator(Num) {
 		Sleep(StandardPauseDuration)
 	}
 	Send('{Enter}')
-	Sleep(20*StandardPauseDuration)
+	Sleep(5*StandardPauseDuration)
 	Send('{Tab}')
 }
 
 ; Function for navigating to bookmarks on the Google Chrome bookmark bar
 BookmarkNavigator(Num) {
-	Sleep(10*StandardPauseDuration)
 	Send('!B')
 	Sleep(StandardPauseDuration)
 	Loop (Num-1) {
@@ -30,6 +31,25 @@ BookmarkNavigator(Num) {
 		Sleep(StandardPauseDuration)
 	}
 	Send('{Enter}')
+}
+
+; System-wide hotkey for opening all most used apps (file explorer and everything pinned to the taskbar) and all bookmarks on the Google Chrome bookmark bar at once
+!Numpad1:: {
+	Send('#e')
+	Sleep(5*StandardPauseDuration)
+	Loop (9) {
+		Send('#' . A_Index)
+		Sleep(5*StandardPauseDuration)
+	}
+	WinActivate('ahk_exe chrome.exe')
+	Sleep(StandardPauseDuration)
+	Loop (NumberOfBookmarks) {
+		BookmarkNavigator(A_Index)
+		Sleep(StandardPauseDuration)
+		Send('^t')
+		Sleep(StandardPauseDuration)
+	}
+	Send('^w')
 }
 
 ; System-wide music hotkeys
@@ -52,7 +72,7 @@ BookmarkNavigator(Num) {
 	Send('{Media_Prev}')
 }
 
-; Windows File Explorer quick access hotkeys
+; Windows File Explorer quick access and open selected file in secondary app hotkeys
 #HotIf WinActive('ahk_class CabinetWClass')
 ^1:: {
 	FolderNavigator(1)
@@ -80,6 +100,15 @@ BookmarkNavigator(Num) {
 }
 ^9:: {
 	FolderNavigator(9)
+}
+^o:: {
+	Send('+{F10}')
+	Sleep(5*StandardPauseDuration)
+	Send('h')
+	Sleep(5*StandardPauseDuration)
+	Send('{Down}')
+	Sleep(StandardPauseDuration)
+	Send('{Enter}')
 }
 
 ; Google Chrome bookmark hotkeys
