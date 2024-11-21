@@ -103,9 +103,9 @@ BookmarkNavigator(Num) {
 }
 ^o:: {
 	Send('+{F10}')
-	Sleep(5*StandardPauseDuration)
+	Sleep(15*StandardPauseDuration)
 	Send('h')
-	Sleep(5*StandardPauseDuration)
+	Sleep(10*StandardPauseDuration)
 	Send('{Down}')
 	Sleep(StandardPauseDuration)
 	Send('{Enter}')
