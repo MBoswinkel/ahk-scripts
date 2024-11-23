@@ -13,7 +13,7 @@ FolderNavigator(Num) {
 	Sleep(StandardPauseDuration)
 	Send('{Home}')
 	Sleep(StandardPauseDuration)
-	Loop (Num) {
+	Loop (Num+2) {
 		Send('{Down}')
 		Sleep(StandardPauseDuration)
 	}
@@ -103,9 +103,9 @@ BookmarkNavigator(Num) {
 }
 ^o:: {
 	Send('+{F10}')
-	Sleep(15*StandardPauseDuration)
+	Sleep(20*StandardPauseDuration)
 	Send('h')
-	Sleep(10*StandardPauseDuration)
+	Sleep(20*StandardPauseDuration)
 	Send('{Down}')
 	Sleep(StandardPauseDuration)
 	Send('{Enter}')
