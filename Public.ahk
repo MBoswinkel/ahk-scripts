@@ -36,11 +36,11 @@ BookmarkNavigator(Num) {
 ; System-wide hotkey for opening all most used apps (file explorer and everything pinned to the taskbar) and all bookmarks on the Google Chrome bookmark bar at once
 !Numpad1:: {
 	Send('#e')
-	Sleep(5*StandardPauseDuration)
 	Loop (9) {
+		Sleep(15*StandardPauseDuration)
 		Send('#' . A_Index)
-		Sleep(5*StandardPauseDuration)
 	}
+	WinWait('ahk_exe chrome.exe')
 	WinActivate('ahk_exe chrome.exe')
 	Sleep(StandardPauseDuration)
 	Loop (NumberOfBookmarks) {
@@ -103,11 +103,11 @@ BookmarkNavigator(Num) {
 }
 ^o:: {
 	Send('+{F10}')
-	Sleep(20*StandardPauseDuration)
+	Sleep(5*StandardPauseDuration)
 	Send('h')
-	Sleep(20*StandardPauseDuration)
+	Sleep(5*StandardPauseDuration)
 	Send('{Down}')
-	Sleep(StandardPauseDuration)
+	Sleep(5*StandardPauseDuration)
 	Send('{Enter}')
 }
 
