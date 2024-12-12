@@ -34,7 +34,7 @@ BookmarkNavigator(Num) {
 }
 
 ; System-wide hotkey for opening all most used apps (file explorer and everything pinned to the taskbar) and all bookmarks on the Google Chrome bookmark bar at once
-!Numpad1:: {
+^Numpad1:: {
 	Send('#e')
 	Loop (9) {
 		Sleep(15*StandardPauseDuration)
@@ -72,7 +72,7 @@ BookmarkNavigator(Num) {
 	Send('{Media_Prev}')
 }
 
-; Windows File Explorer quick access and open selected file in secondary app hotkeys
+; Windows File Explorer quick access and open selected file in Visual Studio Code hotkeys
 #HotIf WinActive('ahk_class CabinetWClass')
 ^1:: {
 	FolderNavigator(1)
@@ -102,13 +102,10 @@ BookmarkNavigator(Num) {
 	FolderNavigator(9)
 }
 ^o:: {
-	Send('+{F10}')
-	Sleep(5*StandardPauseDuration)
-	Send('h')
-	Sleep(5*StandardPauseDuration)
-	Send('{Down}')
-	Sleep(5*StandardPauseDuration)
-	Send('{Enter}')
+	A_Clipboard := ''
+	Send('^C')
+	ClipWait()
+	Run('C:\Users\Maarten lokaal\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Visual Studio Code\Visual Studio Code.lnk ' . A_Clipboard)
 }
 
 ; Google Chrome bookmark hotkeys
