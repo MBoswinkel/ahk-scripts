@@ -33,16 +33,24 @@ BookmarkNavigator(Num) {
 	Send('{Enter}')
 }
 
-; System-wide hotkey for opening all most used apps (file explorer and everything pinned to the taskbar) and all bookmarks on the Google Chrome bookmark bar at once
+; System-wide hotkey for launching all favorite apps (and browser bookmarks) and moving them to the preferred screen positions
 ^Numpad1:: {
 	Send('#e')
 	Loop (9) {
 		Sleep(15*StandardPauseDuration)
 		Send('#' . A_Index)
 	}
+
+	WinWait('ahk_class CabinetWClass')
+	WinActivate('ahk_class CabinetWClass')
+	WinMove(10, 10, 1000, 500, 'ahk_class CabinetWClass')
+	WinMaximize('ahk_class CabinetWClass')
+	Send('{LWin down}+{Left}{LWin up}')
+
 	WinWait('ahk_exe chrome.exe')
 	WinActivate('ahk_exe chrome.exe')
-	Sleep(StandardPauseDuration)
+	WinMove(10, 10, 1000, 500, 'ahk_exe chrome.exe')
+	WinMaximize('ahk_exe chrome.exe')
 	Loop (NumberOfBookmarks) {
 		BookmarkNavigator(A_Index)
 		Sleep(StandardPauseDuration)
@@ -50,6 +58,24 @@ BookmarkNavigator(Num) {
 		Sleep(StandardPauseDuration)
 	}
 	Send('^w')
+
+	WinWait('ahk_exe OUTLOOK.EXE')
+	WinActivate('ahk_exe OUTLOOK.EXE')
+	WinMove(10, 10, 1000, 500, 'ahk_exe OUTLOOK.EXE')
+	WinMaximize('ahk_exe OUTLOOK.EXE')
+	Send('{LWin down}+{Left}{LWin up}')
+
+	WinWait('Microsoft To Do')
+	WinActivate('Microsoft To Do')
+	WinMove(10, 10, 1000, 500, 'Microsoft To Do')
+	WinMaximize('Microsoft To Do')
+	Send('{LWin down}+{Left}{LWin up}')
+
+	WinWait('ahk_exe Spotify.exe')
+	WinActivate('ahk_exe Spotify.exe')
+	WinMove(10, 10, 1000, 500, 'ahk_exe Spotify.exe')
+	WinMaximize('ahk_exe Spotify.exe')
+	Send('{LWin down}+{Left}{LWin up}')
 }
 
 ; System-wide music hotkeys
@@ -108,7 +134,7 @@ BookmarkNavigator(Num) {
 	Run('C:\Users\Maarten lokaal\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Visual Studio Code\Visual Studio Code.lnk ' . A_Clipboard)
 }
 
-; Google Chrome bookmark hotkeys
+; Google Chrome bookmark bar hotkeys
 #HotIf WinActive('ahk_exe chrome.exe')
 ^1:: {
 	BookmarkNavigator(1)
