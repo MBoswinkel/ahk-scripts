@@ -4,6 +4,9 @@
 ; Duration of standard pause between actions
 StandardPauseDuration := 50
 
+; Number of pins to the Windows Taskbar
+NumberOfPins := 4
+
 ; Number of bookmarks on the Google Chrome bookmark bar
 NumberOfBookmarks := 3
 
@@ -33,48 +36,17 @@ BookmarkNavigator(Num) {
 	Send('{Enter}')
 }
 
-; System-wide hotkey for launching all favorite apps (and browser bookmarks) and moving them to the preferred screen positions
-^Numpad1:: {
-	Send('#e')
-	Loop (9) {
-		Sleep(15*StandardPauseDuration)
-		Send('#' . A_Index)
-	}
+; Function for moving the window with the given identifier to the right screen (maximized)
+MoveWindowRight(identifier) {
+	WinWait(identifier)
+	WinActivate(identifier)
+	WinMove(10, 10, 1000, 500, identifier)
+	WinMaximize(identifier)
+}
 
-	WinWait('ahk_class CabinetWClass')
-	WinActivate('ahk_class CabinetWClass')
-	WinMove(10, 10, 1000, 500, 'ahk_class CabinetWClass')
-	WinMaximize('ahk_class CabinetWClass')
-	Send('{LWin down}+{Left}{LWin up}')
-
-	WinWait('ahk_exe chrome.exe')
-	WinActivate('ahk_exe chrome.exe')
-	WinMove(10, 10, 1000, 500, 'ahk_exe chrome.exe')
-	WinMaximize('ahk_exe chrome.exe')
-	Loop (NumberOfBookmarks) {
-		BookmarkNavigator(A_Index)
-		Sleep(StandardPauseDuration)
-		Send('^t')
-		Sleep(StandardPauseDuration)
-	}
-	Send('^w')
-
-	WinWait('ahk_exe OUTLOOK.EXE')
-	WinActivate('ahk_exe OUTLOOK.EXE')
-	WinMove(10, 10, 1000, 500, 'ahk_exe OUTLOOK.EXE')
-	WinMaximize('ahk_exe OUTLOOK.EXE')
-	Send('{LWin down}+{Left}{LWin up}')
-
-	WinWait('Microsoft To Do')
-	WinActivate('Microsoft To Do')
-	WinMove(10, 10, 1000, 500, 'Microsoft To Do')
-	WinMaximize('Microsoft To Do')
-	Send('{LWin down}+{Left}{LWin up}')
-
-	WinWait('ahk_exe Spotify.exe')
-	WinActivate('ahk_exe Spotify.exe')
-	WinMove(10, 10, 1000, 500, 'ahk_exe Spotify.exe')
-	WinMaximize('ahk_exe Spotify.exe')
+; Function for moving the window with the given identifier to the left screen (maximized)
+MoveWindowLeft(identifier) {
+	MoveWindowRight(identifier)
 	Send('{LWin down}+{Left}{LWin up}')
 }
 
@@ -96,6 +68,28 @@ BookmarkNavigator(Num) {
 }
 ^Numpad4:: {
 	Send('{Media_Prev}')
+}
+
+; System-wide hotkey for launching all favorite apps (and browser bookmarks) and moving them to the preferred screen positions
+^Numpad1:: {
+	Loop (NumberOfPins) {
+		Send('#' . A_Index)
+		Sleep(StandardPauseDuration)
+	}
+	Send('#e')
+	Sleep(100*StandardPauseDuration)
+	MoveWindowRight('ahk_exe chrome.exe')
+	Loop (NumberOfBookmarks) {
+		BookmarkNavigator(A_Index)
+		Sleep(StandardPauseDuration)
+		Send('^t')
+		Sleep(StandardPauseDuration)
+	}
+	Send('^w')
+	MoveWindowLeft('ahk_exe OUTLOOK.EXE')
+	MoveWindowLeft('Microsoft To Do')
+	MoveWindowLeft('ahk_exe Spotify.exe')
+	MoveWindowLeft('ahk_class CabinetWClass')
 }
 
 ; Windows File Explorer quick access and open selected file in Visual Studio Code hotkeys
@@ -121,12 +115,6 @@ BookmarkNavigator(Num) {
 ^7:: {
 	FolderNavigator(7)
 }
-^8:: {
-	FolderNavigator(8)
-}
-^9:: {
-	FolderNavigator(9)
-}
 ^o:: {
 	A_Clipboard := ''
 	Send('^C')
@@ -144,22 +132,4 @@ BookmarkNavigator(Num) {
 }
 ^3:: {
 	BookmarkNavigator(3)
-}
-^4:: {
-	BookmarkNavigator(4)
-}
-^5:: {
-	BookmarkNavigator(5)
-}
-^6:: {
-	BookmarkNavigator(6)
-}
-^7:: {
-	BookmarkNavigator(7)
-}
-^8:: {
-	BookmarkNavigator(8)
-}
-^9:: {
-	BookmarkNavigator(9)
 }
